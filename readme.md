@@ -8,17 +8,17 @@ O pipeline consome dados reais da API pública da CoinGecko, gerencia o fluxo de
 
 ## 🏗️ Arquitetura do Projeto
 
-O pipeline segue o conceito de arquitetura **ELT** (Extract, Load, Transform) dividido em camadas (Medallion Architecture):
-[ API CoinGecko ]
-│
-▼  (Extract & Load via PythonOperator)
-[ Airflow: ingest_task ] ───> [ ClickHouse: crypto_db.src_crypto_prices ] (Camada Bronze/Raw)
-│
-▼  (Orchestrate via BashOperator)
-[ Airflow: dbt_run ]
-│
-├─> [ dbt: stg_crypto_prices ] ──> View no ClickHouse (Camada Silver/Staging)
-└─> [ dbt: fct_crypto_metrics ] ─> Tabela no ClickHouse (Camada Gold/Marts)
+O pipeline segue o conceito de arquitetura **ELT** (Extract, Load, Transform) dividido em camadas (Medallion Architecture):  
+[ API CoinGecko ]  
+│  
+▼  (Extract & Load via PythonOperator)  
+[ Airflow: ingest_task ] ───> [ ClickHouse: crypto_db.src_crypto_prices ] (Camada Bronze/Raw)  
+│  
+▼  (Orchestrate via BashOperator)  
+[ Airflow: dbt_run ]  
+│  
+├─> [ dbt: stg_crypto_prices ] ──> View no ClickHouse (Camada Silver/Staging)  
+└─> [ dbt: fct_crypto_metrics ] ─> Tabela no ClickHouse (Camada Gold/Marts)  
 
 1. **Camada Bronze (Raw):** Dados brutos ingeridos diretamente da API REST em formato tabular.
 2. **Camada Silver (Staging):** Limpeza, padronização de tickers em caixa alta e renomeação de campos estruturados como uma `VIEW` interativa.
