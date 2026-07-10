@@ -11,10 +11,12 @@ O pipeline consome dados reais da API pública da CoinGecko, gerencia o fluxo de
 O pipeline segue o conceito de arquitetura **ELT** (Extract, Load, Transform) dividido em camadas (Medallion Architecture):  
 [ API CoinGecko ]  
 │  
-▼  (Extract & Load via PythonOperator)  
+▼  
+(Extract & Load via PythonOperator)  
 [ Airflow: ingest_task ] ───> [ ClickHouse: crypto_db.src_crypto_prices ] (Camada Bronze/Raw)  
 │  
-▼  (Orchestrate via BashOperator)  
+▼  
+(Orchestrate via BashOperator)  
 [ Airflow: dbt_run ]  
 │  
 ├─> [ dbt: stg_crypto_prices ] ──> View no ClickHouse (Camada Silver/Staging)  
@@ -55,13 +57,12 @@ O motor de tabelas `MergeTree` do ClickHouse executa operações de escrita e re
 ### Passo a Passo
 
 1. **Clonar o repositório:**
-   ```bash
    git clone <link-do-seu-repositorio>
    cd <nome-da-pasta-do-projeto>
 
 2. **Inicializar a Stack (Docker):**
 Execute o comando abaixo para construir a imagem customizada do Airflow (contendo os drivers do dbt e do ClickHouse) e subir os serviços de forma isolada:
-docker compose up -d --build
+   docker compose up -d --build
 
 3. **Executar o Pipeline no Airflow:**
 Acesse o painel de controle do Airflow em: http://localhost:8080
@@ -71,14 +72,14 @@ Ative a DAG crypto_clickhouse_pipeline mudando a chave para Unpause.
 Clique em Trigger DAG (botão de Play) para rodar o pipeline manualmente.
 
 4. **Visualizar os Resultados no ClickHouse:**
-Acesse o cliente web do ClickHouse em http://localhost:8123/play, faça login com usuário admin e senha admin, e execute as queries de validação:
+Acesse o cliente web do ClickHouse em http://localhost:8123/play, faça login com usuário admin e senha admin, e execute as queries de validação:  
 -- Validar tabelas criadas pelo dbt
-SHOW TABLES FROM crypto_db;
+   SHOW TABLES FROM crypto_db;  
 
--- Consultar os dados finais refinados (Camada Gold)
-SELECT * FROM crypto_db.fct_crypto_metrics;
+-- Consultar os dados finais refinados (Camada Gold)  
+   SELECT * FROM crypto_db.fct_crypto_metrics;  
 
 5. **Encerrar e Liberar Memória RAM:**
 Ao finalizar os testes, você pode derrubar os containers e desligar a instância do WSL2 para liberar totalmente a memória do seu computador host:
 docker compose down
-wsl --shutdown
+   wsl --shutdown
