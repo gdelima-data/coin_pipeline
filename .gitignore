@@ -1,0 +1,9 @@
+dags/scripts/__pycache__/
+airflow.db
+standalone_admin_password.txt
+
+clickhouse_data/
+clickhouse_local_data/
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/

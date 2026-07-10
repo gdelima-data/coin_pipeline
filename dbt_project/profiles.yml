@@ -1,0 +1,10 @@
+dbt_project:
+  outputs:
+    dev:
+      type: clickhouse
+      host: clickhouse
+      port: 9000
+      user: admin
+      password: admin
+      schema: crypto_db
+  target: dev
