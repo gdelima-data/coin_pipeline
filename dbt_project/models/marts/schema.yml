@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: fct_crypto_metrics
+    description: "Tabela final contendo as métricas agregadas de preços de criptomoedas."
+    columns:
+      - name: ticker
+        description: "Símbolo da criptomoeda (ex: BTC, ETH)."
+        tests:
+        - unique
+        - not_null
+      
+      - name: coin_name
+        description: "Nome completo da criptomoeda (ex: Bitcoin, Ethereum)."
+        tests:
+        - not_null
+
+      - name: avg_price_period
+        description: "Preço médio da criptomoeda para o período com 2 casas decimais."
+        tests:
+        - not_null
+        - dbt_utils.expression_is_true:
+            expression: "> 0"  
+  

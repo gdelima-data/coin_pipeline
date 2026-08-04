@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: crypto_db
+    description: "Fonte de dados contendo métricas de preços de criptomoedas."
+    tables:
+      - name: src_crypto_prices
+        description: "Tabela contendo métricas de preços de criptomoedas."

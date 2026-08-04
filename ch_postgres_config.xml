@@ -1,0 +1,7 @@
+<clickhouse>
+    <postgresql_port>9005</postgresql_port>
+    <postgresql>
+        <require_ssl>false</require_ssl>
+        <ssl_mode>disable</ssl_mode>
+    </postgresql>
+</clickhouse>

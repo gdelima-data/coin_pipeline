@@ -4,13 +4,15 @@ services:
     container_name: clickhouse-server
     ports:
       - "8123:8123" 
-      - "9000:9000" 
+      - "9000:9000"
+      - "9005:9005"
     environment:
       - CLICKHOUSE_DB=crypto_db
       - CLICKHOUSE_USER=admin
       - CLICKHOUSE_PASSWORD=admin
     volumes:
       - clickhouse_pure_volume:/var/lib/clickhouse
+      - ./ch_postgres_config.xml:/etc/clickhouse-server/config.d/postgres_port.xml
 
   airflow:
     build: . 
