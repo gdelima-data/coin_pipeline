@@ -1,9 +1,23 @@
-dags/scripts/__pycache__/
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Airflow
+logs/
 airflow.db
+airflow.cfg
 standalone_admin_password.txt
 
-clickhouse_data/
-clickhouse_local_data/
+# dbt
 dbt_project/target/
-dbt_project/dbt_packages/
 dbt_project/logs/
+dbt_project/dbt_packages/
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store

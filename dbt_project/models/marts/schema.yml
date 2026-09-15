@@ -2,23 +2,113 @@ version: 2
 
 models:
   - name: fct_crypto_metrics
-    description: "Tabela final contendo as métricas agregadas de preços de criptomoedas."
+    description: "Tabela final contendo métricas agregadas de desempenho das criptomoedas."
+
     columns:
       - name: ticker
-        description: "Símbolo da criptomoeda (ex: BTC, ETH)."
+        description: "Símbolo da criptomoeda."
         tests:
-        - unique
-        - not_null
-      
+          - unique
+          - not_null
+
       - name: coin_name
-        description: "Nome completo da criptomoeda (ex: Bitcoin, Ethereum)."
+        description: "Nome da criptomoeda."
         tests:
-        - not_null
+          - not_null
 
       - name: avg_price_period
-        description: "Preço médio da criptomoeda para o período com 2 casas decimais."
+        description: "Preço médio da criptomoeda durante o período."
         tests:
-        - not_null
-        - dbt_utils.expression_is_true:
-            expression: "> 0"  
-  
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: min_price_period
+        description: "Menor preço registrado durante o período."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: peak_price
+        description: "Maior preço registrado durante o período."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: first_price
+        description: "Preço registrado na primeira observação."
+        tests:
+          - not_null
+
+      - name: latest_price
+        description: "Preço registrado na observação mais recente."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: price_change_pct
+        description: "Variação percentual do preço entre a primeira e a última observação."
+        tests:
+          - not_null
+
+      - name: price_volatility_pct
+        description: "Volatilidade relativa do preço."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: avg_market_cap
+        description: "Market cap médio durante o período."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: latest_market_cap
+        description: "Market cap da observação mais recente."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: avg_volume
+        description: "Volume médio negociado durante o período."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: latest_volume
+        description: "Volume da observação mais recente."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: volume_market_cap_ratio
+        description: "Relação percentual entre volume e market cap."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ">= 0"
+
+      - name: observations
+        description: "Quantidade de observações disponíveis para a criptomoeda."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "> 0"
+
+      - name: first_update
+        description: "Data e hora da primeira observação."
+        tests:
+          - not_null
+
+      - name: last_updated
+        description: "Data e hora da observação mais recente."
+        tests:
+          - not_null

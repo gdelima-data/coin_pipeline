@@ -3,8 +3,8 @@ dbt_project:
     dev:
       type: clickhouse
       host: clickhouse
-      port: 9000
+      port: 8123
       user: admin
-      password: admin
+      password: "{{ env_var('CLICKHOUSE_PASSWORD') }}"
       schema: crypto_db
   target: dev

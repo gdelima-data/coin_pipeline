@@ -1,11 +1,12 @@
 import requests
+import os
 from clickhouse_driver import Client
 
 def fetch_and_load_api():
     url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1'
     response = requests.get(url).json()
 
-    client = Client(host='clickhouse', user='admin', password='admin', database='crypto_db')
+    client = Client(host='clickhouse', user='admin', password=os.environ['CLICKHOUSE_PASSWORD'], database='crypto_db')
 
     client.execute(
         """

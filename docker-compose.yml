@@ -9,7 +9,7 @@ services:
     environment:
       - CLICKHOUSE_DB=crypto_db
       - CLICKHOUSE_USER=admin
-      - CLICKHOUSE_PASSWORD=admin
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
     volumes:
       - clickhouse_pure_volume:/var/lib/clickhouse
       - ./ch_postgres_config.xml:/etc/clickhouse-server/config.d/postgres_port.xml
@@ -21,6 +21,8 @@ services:
       - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - _PIP_ADDITIONAL_REQUIREMENTS=dbt-clickhouse
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./dbt_project:/opt/airflow/dbt_project
